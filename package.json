@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "json": "json-server data.js -p 3500 -m authMiddleware.js" 
+    "json": "json-server data.js -p 3500 -m authMiddleware.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -16,7 +16,7 @@
     "vue": "^3.2.13",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
-    "vuex": "^3.0.1"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
