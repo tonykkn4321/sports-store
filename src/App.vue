@@ -1,5 +1,6 @@
 <template>
   <ProductStore />
+  
 </template>
 
 <script>
