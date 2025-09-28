@@ -1,9 +1,15 @@
 import { createStore } from 'vuex'
 import Axios from "axios";
 
-const baseUrl = "http://localhost:3500";
+//const baseUrl = "http://localhost:3500";
+//const productsUrl = `${baseUrl}/products`;
+//const categoriesUrl = `${baseUrl}/categories`;
+
+// For deploying to Netlify:
+const baseUrl = "/.netlify/functions";
 const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
+
 
 const store = createStore({
   strict: true,
