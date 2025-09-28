@@ -1,4 +1,4 @@
-const data = require("./products-data");
+const data = require("./products");
 
 exports.handler = async function () {
   const categories = [...new Set(data.map(p => p.category))].sort();
