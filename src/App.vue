@@ -1,14 +1,14 @@
 <template>
-  <ProductStore />  
+  <router-view />
 </template>
 
 <script>
-  import ProductStore from "./components/ProductStore";
+  // import ProductStore from "./components/ProductStore";
   import { mapActions } from "vuex";
 
   export default {
     name: 'App',
-    components: { ProductStore },
+    // components: { ProductStore },
     methods: {
         ...mapActions(["getData"])
       },

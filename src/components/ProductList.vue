@@ -7,7 +7,13 @@
                     {{ currency(p.price) }}
                 </span>
             </h4>
-            <div class="card-text bg-white p-1">{{ p.description }}</div>
+            <div class="card-text bg-white p-1">
+                {{ p.description }}
+                <button class="btn btn-success btn-sm float-right"
+                        v-on:click="handleProductAdd(p)">
+                    Add To Cart
+                </button>
+            </div>
         </div>
         <page-controls />
     </div>
@@ -15,7 +21,7 @@
 
 <script>
 
-import { mapGetters} from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import PageControls from "./PageControls";
 
 export default {
@@ -24,13 +30,18 @@ export default {
         ...mapGetters({ products: "processedProducts" })
     },
     // Vue 3 no longer supports filters in the options API.
-    methods: {
-        currency(value) {
-            return new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD"
-            }).format(value)
-        }
+     methods: {
+    currency(value) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+      }).format(value);
+    },
+    ...mapMutations({ addProduct: "cart/addProduct" }),
+    handleProductAdd(product) {
+      this.addProduct(product);
+      this.$router.push("/cart");
     }
-}
+  }
+};
 </script>
