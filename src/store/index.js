@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import Axios from "axios";
 import CartModule from "./cart";
+import OrdersModule from "./orders";
 
 const baseUrl = "http://localhost:3500";
 const productsUrl = `${baseUrl}/products`;
@@ -14,7 +15,7 @@ const categoriesUrl = `${baseUrl}/categories`;
 
 const store = createStore({
   strict: true,
-  modules:  { cart: CartModule },
+  modules:  { cart: CartModule, orders: OrdersModule },
   state: {
     products: [],
     categoriesData: [],
