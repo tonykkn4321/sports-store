@@ -19,23 +19,32 @@
             autocomplete="off"
             class="form-control"
             :class="{ 'is-invalid': v$.order[field.key]?.$error }"
+            :aria-invalid="v$.order[field.key]?.$error"
+            :aria-describedby="`${field.key}-error`"
+            @blur="v$.order[field.key].$touch()"
           />
-          <ValidationError :validation="v$.order[field.key]" />
+          <ValidationError
+            :validation="v$.order[field.key]"
+            :id="`${field.key}-error`"
+            :formTouched="formTouched"
+          />
         </div>
       </div>
 
       <div class="text-center">
         <router-link to="/cart" class="btn btn-secondary m-1">Back</router-link>
-        <button type="submit" class="btn btn-primary m-1">Place Order</button>
+        <button type="submit" class="btn btn-primary m-1" :disabled="isSubmitting">
+          {{ isSubmitting ? 'Placing Order...' : 'Place Order' }}
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
-import { required, email } from '@vuelidate/validators';
+import { required, email, helpers } from '@vuelidate/validators';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import ValidationError from './ValidationError.vue';
@@ -47,6 +56,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const isSubmitting = ref(false);
 
     const order = reactive({
       name: '',
@@ -56,17 +66,20 @@ export default {
       zip: ''
     });
 
+    const zipPattern = helpers.regex(/^\d{5}$/);
+
     const rules = {
       order: {
         name: { required },
         email: { required, email },
         address: { required },
         city: { required },
-        zip: { required }
+        zip: { required, zipPattern }
       }
     };
 
     const v$ = useVuelidate(rules, { order });
+    const formTouched = computed(() => v$.value.$dirty);
 
     const fields = [
       { key: 'name', label: 'Name' },
@@ -77,11 +90,13 @@ export default {
     ];
 
     async function submitOrder() {
-      v$.$touch();
-      if (!v$.$invalid) {
+      v$.value.$touch();
+      if (!v$.value.$invalid) {
+        isSubmitting.value = true;
         const orderId = await store.dispatch('storeOrder', order);
         await store.dispatch('cart/clearCartData');
         router.push(`/thanks/${orderId}`);
+        isSubmitting.value = false;
       }
     }
 
@@ -89,7 +104,9 @@ export default {
       order,
       fields,
       submitOrder,
-      v$
+      v$: v$.value,
+      formTouched,
+      isSubmitting
     };
   }
 };

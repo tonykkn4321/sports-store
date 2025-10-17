@@ -1,7 +1,8 @@
 <template>
-  <div v-if="validation?.$dirty && validation?.$error" class="text-danger">
+  <div v-if="shouldShowError" class="text-danger" :id="id" role="alert">
     <div v-if="hasError('required')">This field is required.</div>
     <div v-if="hasError('email')">Please enter a valid email address.</div>
+    <div v-if="hasError('zipPattern')">Please enter a valid ZIP code.</div>
   </div>
 </template>
 
@@ -12,6 +13,19 @@ export default {
     validation: {
       type: Object,
       required: true
+    },
+    id: {
+      type: String,
+      default: ''
+    },
+    formTouched: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    shouldShowError() {
+      return (this.validation?.$dirty || this.formTouched) && this.validation?.$error;
     }
   },
   methods: {
