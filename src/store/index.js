@@ -3,14 +3,14 @@ import Axios from "axios";
 import CartModule from "./cart";
 import OrdersModule from "./orders";
 
-const baseUrl = "http://localhost:3500";
-const productsUrl = `${baseUrl}/products`;
-const categoriesUrl = `${baseUrl}/categories`;
+// const baseUrl = "http://localhost:3500";
+// const productsUrl = `${baseUrl}/products`;
+// const categoriesUrl = `${baseUrl}/categories`;
 
 // For deploying to Netlify:
-//const baseUrl = "/.netlify/functions";
-//const productsUrl = `${baseUrl}/products`;
-//const categoriesUrl = `${baseUrl}/categories`;
+const baseUrl = "/.netlify/functions";
+const productsUrl = `${baseUrl}/products`;
+const categoriesUrl = `${baseUrl}/categories`;
 
 
 const store = createStore({

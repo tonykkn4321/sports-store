@@ -1,9 +1,9 @@
 import Axios from "axios";
 
-const ORDERS_URL = "http://localhost:3500/orders";
+// const ORDERS_URL = "http://localhost:3500/orders";
 
 // For deploying to Netlify:
-// const ORDERS_URL = "/.netlify/functions/orders";
+const ORDERS_URL = "/.netlify/functions/orders";
 
 export default {
   actions: {
