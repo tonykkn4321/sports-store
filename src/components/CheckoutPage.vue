@@ -79,7 +79,7 @@ export default {
     };
 
     const v$ = useVuelidate(rules, { order });
-    const formTouched = computed(() => v$.value.$dirty);
+    const formTouched = computed(() => v$.value.$anyDirty); // ✅ use $anyDirty
 
     const fields = [
       { key: 'name', label: 'Name' },
@@ -90,7 +90,7 @@ export default {
     ];
 
     async function submitOrder() {
-      v$.value.$touch();
+      v$.value.$touch(); // ✅ mark all fields as touched
       if (!v$.value.$invalid) {
         isSubmitting.value = true;
         const orderId = await store.dispatch('storeOrder', order);
@@ -104,7 +104,7 @@ export default {
       order,
       fields,
       submitOrder,
-      v$: v$.value,
+      v$,
       formTouched,
       isSubmitting
     };

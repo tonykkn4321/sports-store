@@ -19,13 +19,13 @@ export default {
       default: ''
     },
     formTouched: {
-      type: Boolean,
-      default: false
+      type: Object, // it's a ref
+      required: true
     }
   },
   computed: {
     shouldShowError() {
-      return (this.validation?.$dirty || this.formTouched) && this.validation?.$error;
+      return (this.validation?.$dirty || this.formTouched.value) && this.validation?.$error;
     }
   },
   methods: {
